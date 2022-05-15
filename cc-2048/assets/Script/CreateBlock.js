@@ -1,4 +1,3 @@
-const Colors = require("color");
 const Emitter = require("mEmitter")
 const emitName = require("emitName")
 
@@ -35,6 +34,7 @@ cc.Class({
             this._arrayBlock[randomNumber] = 2
             this._listBlock[randomNumber].getComponent("block").labelPrefab.string = 2
         } else { this.generate() }
+        Emitter.instance.emit(emitName.blockColor, this._listBlock, this._arrayBlock)
     },
 
     onKeyUp(event) {

@@ -1,4 +1,5 @@
-const Colors = require("color");
+const Emitter = require("mEmitter")
+const colors = require("color");
 cc.Class({
     extends: cc.Component,
 
@@ -7,7 +8,9 @@ cc.Class({
         // labelString: cc.Label
     },
 
-    // onLoad () {},
+    onLoad () {
+        
+    },
 
     start () {
         

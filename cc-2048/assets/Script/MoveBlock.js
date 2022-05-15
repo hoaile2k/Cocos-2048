@@ -126,7 +126,7 @@ cc.Class({
         }
     },
 
-    combineRow(listBlock, arrayBlock){
+    combineRowLeft(listBlock, arrayBlock){
         for(let index = 0; index < 16; index++){
             if(arrayBlock[index] === arrayBlock[index+1]){
                 let combinedTotal = arrayBlock[index] + arrayBlock[index + 1]
@@ -138,45 +138,75 @@ cc.Class({
             }         
         }
     },
-    combineColumn(listBlock, arrayBlock){
+    combineRowRight(listBlock, arrayBlock){
+        for(let index = 0; index < 16; index++){
+            if(arrayBlock[index] === arrayBlock[index+1]){
+                let combinedTotal = arrayBlock[index] + arrayBlock[index + 1]
+                listBlock[index+1].getComponent("block").labelPrefab.string = combinedTotal
+                listBlock[index].getComponent("block").labelPrefab.string = 0
+                arrayBlock[index+1] = combinedTotal
+                arrayBlock[index] = 0
+            }         
+        }
+    },
+    combineColumnUp(listBlock, arrayBlock){
         for(let index = 0; index < 12; index++){
             if(arrayBlock[index] === arrayBlock[index+this._width]){
                 let combinedTotal = arrayBlock[index] + arrayBlock[index+this._width]
-                listBlock[index+this._width].getComponent("block").labelPrefab.string = combinedTotal
-                listBlock[index].getComponent("block").labelPrefab.string = 0
+                listBlock[index].getComponent("block").labelPrefab.string = combinedTotal
+                listBlock[index+this._width].getComponent("block").labelPrefab.string = 0
                 
-                arrayBlock[index+this._width]= combinedTotal
-                arrayBlock[index]= 0
+                arrayBlock[index]= combinedTotal
+                arrayBlock[index+this._width]= 0
+            }
+        }
+    },
+
+    combineColumnDown(listBlock, arrayBlock){
+        for(let index = 12; index > 0; index--){
+            if(arrayBlock[index] === arrayBlock[index+this._width]){
+                let combinedTotal = arrayBlock[index] + arrayBlock[index+this._width]
+                listBlock[index].getComponent("block").labelPrefab.string = combinedTotal
+                listBlock[index+this._width].getComponent("block").labelPrefab.string = 0
+                
+                arrayBlock[index]= combinedTotal
+                arrayBlock[index+this._width]= 0
             }
         }
     },
 
     moveRightCombined(listBlock, arrayBlock){
         this.moveRight(listBlock, arrayBlock)
-        this.combineRow(listBlock, arrayBlock)
+        this.combineRowRight(listBlock, arrayBlock)
         this.moveRight(listBlock, arrayBlock)
         Emitter.instance.emit(emitName.generate)
 
     },
     moveLeftCombined(listBlock, arrayBlock){
         this.moveLeft(listBlock, arrayBlock)
-        this.combineRow(listBlock, arrayBlock)
+        this.combineRowLeft(listBlock, arrayBlock)
         this.moveLeft(listBlock, arrayBlock)
         Emitter.instance.emit(emitName.generate)
     },
     moveUpCombined(listBlock, arrayBlock){
         this.moveUp(listBlock, arrayBlock)
-        this.combineColumn(listBlock, arrayBlock)
+        this.combineColumnUp(listBlock, arrayBlock)
         this.moveUp(listBlock, arrayBlock)
         Emitter.instance.emit(emitName.generate)
 
     },
     moveDownCombined(listBlock, arrayBlock){
         this.moveDown(listBlock, arrayBlock)
-        this.combineColumn(listBlock, arrayBlock)
+        this.combineColumnDown(listBlock, arrayBlock)
         this.moveDown(listBlock, arrayBlock)
         Emitter.instance.emit(emitName.generate)
     }
 
     // update (dt) {},
 });
+/** 
+  Bugs:
+   => move down và move right chưa hoàn thiện (check lại điều kiện)
+   => tất cả các cột hết đườngg đi qua tay phải rồi vẫn hiện số
+
+**/
