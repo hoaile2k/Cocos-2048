@@ -127,7 +127,7 @@ cc.Class({
     },
 
     combineRowLeft(listBlock, arrayBlock){
-        for(let index = 0; index < 16; index++){
+        for(let index = 0; index <= 15; index++){
             if(arrayBlock[index] === arrayBlock[index+1]){
                 let combinedTotal = arrayBlock[index] + arrayBlock[index + 1]
                 listBlock[index].getComponent("block").labelPrefab.string = combinedTotal
@@ -139,13 +139,14 @@ cc.Class({
         }
     },
     combineRowRight(listBlock, arrayBlock){
-        for(let index = 0; index < 16; index++){
+        for(let index = 15; index >= 0; index--){
             if(arrayBlock[index] === arrayBlock[index+1]){
                 let combinedTotal = arrayBlock[index] + arrayBlock[index + 1]
-                listBlock[index+1].getComponent("block").labelPrefab.string = combinedTotal
-                listBlock[index].getComponent("block").labelPrefab.string = 0
-                arrayBlock[index+1] = combinedTotal
-                arrayBlock[index] = 0
+                listBlock[index].getComponent("block").labelPrefab.string = combinedTotal
+                listBlock[index+1].getComponent("block").labelPrefab.string = 0
+
+                arrayBlock[index] = combinedTotal
+                arrayBlock[index+1] = 0
             }         
         }
     },
