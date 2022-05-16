@@ -150,7 +150,7 @@ cc.Class({
         }
     },
     combineColumnUp(listBlock, arrayBlock){
-        for(let index = 0; index < 12; index++){
+        for(let index = 0; index <= 15; index++){
             if(arrayBlock[index] === arrayBlock[index+this._width]){
                 let combinedTotal = arrayBlock[index] + arrayBlock[index+this._width]
                 listBlock[index].getComponent("block").labelPrefab.string = combinedTotal
@@ -163,9 +163,11 @@ cc.Class({
     },
 
     combineColumnDown(listBlock, arrayBlock){
-        for(let index = 12; index > 0; index--){
-            if(arrayBlock[index] === arrayBlock[index+this._width]){
+        cc.log(arrayBlock)
+        for(let index = 15; index >= 0; index--){
+            if(arrayBlock[index] == arrayBlock[index+this._width]){
                 let combinedTotal = arrayBlock[index] + arrayBlock[index+this._width]
+                cc.log(combinedTotal)
                 listBlock[index].getComponent("block").labelPrefab.string = combinedTotal
                 listBlock[index+this._width].getComponent("block").labelPrefab.string = 0
                 
